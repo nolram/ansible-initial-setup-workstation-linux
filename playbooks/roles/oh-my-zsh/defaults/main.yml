@@ -1,0 +1,6 @@
+---
+# defaults file for setup-init-linux
+
+vscode_apt_repository: https://packages.microsoft.com/repos/vscode
+vscode_package: code
+vscode_package_state: present

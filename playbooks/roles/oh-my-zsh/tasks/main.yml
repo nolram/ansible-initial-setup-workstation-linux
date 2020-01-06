@@ -1,0 +1,10 @@
+---
+# tasks file for setup-init-linux
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install VSCode.
+  package:
+    name: "{{ vscode_package }}"
+    state: "{{ vscode_package_state }}"

@@ -1,0 +1,25 @@
+- name: Install dependencies VS Code
+  apt:
+    name:
+      - software-properties-common
+      - apt-transport-https
+      - wget
+    state: present
+
+- name: Add VS Code apt key.
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  register: add_repository_key_vscode
+
+- name: Add VS Code apt key in case previous failed
+  shell: "wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -"
+  args:
+    warn: false
+  when: add_repository_key_vscode is failed
+
+- name: Add VS Code repository.
+  apt_repository:
+    repo: "{{ vscode_apt_repository }}"
+    state: present
+    update_cache: true

@@ -1,0 +1,22 @@
+- name: Install zsh
+  apt:
+    name:
+      - zsh
+      - powerline 
+      - fonts-powerline
+    state: present
+
+- name: Store zsh path
+  shell: whereis zsh
+  register: whereis_zsh
+
+- name: Register zsh to user
+  shell: "usermod -s {{ whereis_zsh }} {{ user_zsh }}"
+
+- name: Copying template .zshrc
+  template:
+      dest: "/home/{{ user_zsh }}/.zshrc"
+      src: .zshrc.j2
+      mode: 0644
+      owner: '{{ user_zsh }}'
+
